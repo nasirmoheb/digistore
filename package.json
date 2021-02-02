@@ -1,0 +1,11 @@
+{
+  "name": "digistore",
+  "version": "1.0.0",
+  "description": "DigiStore is an online shopping website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nasir Ahmad Moheb",
+  "license": "ISC"
+}
