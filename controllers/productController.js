@@ -2,18 +2,42 @@ const Product = require('./../models/producModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
-exports.createProduct = catchAsync(async (req, res, next) => {
-  const newProduct = await Product.create(req.body);
-
-  res.status(201).json({
-    status: 'success',
-    data: newProduct
-  });
-});
-
 exports.getAllProduct = catchAsync(async (req, res, next) => {
-  const products = await Product.find();
+  //Build query
+  //1)Filtering
+  let queryObj = { ...req.query };
+  //exclude fields that are not in database
+  const excludedFields = ['page', 'sort', 'limit', 'fields'];
+  excludedFields.forEach(e => delete queryObj[e]);
 
+  //2)Advanced Filtering
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+  queryObj = JSON.parse(queryStr);
+
+  let query = Product.find(queryObj);
+
+  //3)sorting
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(',').join(' ');
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort('-createdAt');
+  }
+
+  //4)Feild Limiting
+  if (req.query.fields) {
+    const fields = req.query.fields.split(',').join(' ');
+    query = query.select(fields);
+    console.log(fields);
+  } else {
+    query = query.select('-__v');
+  }
+
+  //Execute query
+  const products = await query;
+
+  //send response
   res.status(200).json({
     status: 'success',
     length: products.length,
@@ -31,6 +55,15 @@ exports.getProduct = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: product
+  });
+});
+
+exports.createProduct = catchAsync(async (req, res, next) => {
+  const newProduct = await Product.create(req.body);
+
+  res.status(201).json({
+    status: 'success',
+    data: newProduct
   });
 });
 
