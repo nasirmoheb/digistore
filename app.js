@@ -1,6 +1,10 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const productRoute = require('./routes/productRoute');
+const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
+
 // ***********************/
 // INITIALIZING
 
@@ -12,11 +16,13 @@ app.use(express.json());
 //development Loger
 app.use(morgan('dev'));
 
-app.get('/', (req, res, next) => {
-  res.json({
-    status: 'success',
-    data: 'Hi this is first initialization'
-  });
+app.use('/api/v1/product', productRoute);
+
+//handle request not fount error
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server.`, 404));
 });
+
+app.use(globalErrorHandler);
 
 module.exports = app;
