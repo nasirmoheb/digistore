@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { promisify } = require('util');
 
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
@@ -57,3 +58,47 @@ exports.login = catchAsync(async (req, res, next) => {
   //if everything is ok create and send token to client
   createAndSentToken(res, user);
 });
+
+exports.protect = catchAsync(async (req, res, next) => {
+  //1)Get token and check if it's there
+  let token = '';
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  //if there is not token create Error
+  if (!token) {
+    return next(new AppError('You are not loged in,Please Log in to get access!', 401));
+  }
+
+  //2)Verification token
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  if (!decoded) {
+    return next(new AppError('You are not loged in,Please Log in to get access!', 401));
+  }
+
+  //3)Check if user still exist
+  const user = await User.findById(decoded.id);
+  if (!user) {
+    return next(new AppError('The user belong to this token does no longer exist!', 401));
+  }
+
+  //4)Check if user changed password after JWT token was issued
+  if (user.changePasswordAfter(decoded.iat)) {
+    return next(new AppError('User recently changed password. Please loged in again!', 401));
+  }
+
+  //Set the req.user to decoded user to use in other middlewares
+  req.user = user;
+  //GRANT ACESS TO PROTECT ROUTE
+  next();
+});
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError('You are not allowed to access this route', 403));
+    }
+    next();
+  };
+};
