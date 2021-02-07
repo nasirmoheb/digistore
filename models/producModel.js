@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
+//define product schema
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A product must have a name'],
-    trim: true
+    trim: true,
+    unique: true
   },
   imageCover: {
     type: String
@@ -25,5 +27,6 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+//create product model from product schema
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
