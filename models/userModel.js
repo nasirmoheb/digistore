@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
@@ -27,7 +28,6 @@ const userSchema = new mongoose.Schema({
     minlength: [8, 'A password must be at least 8 characters'],
     select: false
   },
-  passwordChangeAt: Date,
   passwordConfirm: {
     type: String,
     required: [true, 'Please confirm your password'],
@@ -38,7 +38,10 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Your password and password confirm is not same.'
     }
-  }
+  },
+  passwordChangeAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date
 });
 
 userSchema.pre(/^find/, function(next) {
@@ -71,6 +74,18 @@ userSchema.methods.changePasswordAfter = function(JWTTimestamp) {
   }
   //By default it return false
   return false;
+};
+
+userSchema.methods.createPasswordResetToken = function() {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 //create model from user schema
