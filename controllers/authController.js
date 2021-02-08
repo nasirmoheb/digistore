@@ -13,11 +13,14 @@ const createToken = id => {
 };
 
 //create and send JWT token
-const createAndSentToken = (res, user) => {
+const createAndSentToken = (res, statusCode, user) => {
   const token = createToken(user._id);
-  res.status(200).json({
+  res.status(statusCode).json({
     status: 'success',
-    token
+    token,
+    data: {
+      user
+    }
   });
 };
 
@@ -30,16 +33,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   });
-
-  const token = createToken(user._id);
-
-  res.status(200).json({
-    status: 'success',
-    token,
-    data: {
-      user
-    }
-  });
+  //Create and send JWT token to log in the user
+  createAndSentToken(res, 200, user);
 });
 
 //login up user to the system
@@ -58,7 +53,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   //if everything is ok create and send token to client
-  createAndSentToken(res, user);
+  createAndSentToken(res, 200, user);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -182,5 +177,33 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   //create and send JWT token to log in the user
-  createAndSentToken(res, user);
+  createAndSentToken(res, 200, user);
+});
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const { currentPassword, password, passwordConfirm } = req.body;
+  //Send error if user does not provide current password, password and password confirm
+  if (!currentPassword || !password || !passwordConfirm) {
+    return next(
+      new AppError('Please provide your currentPassword ,password and passwordConfirm', 400)
+    );
+  }
+  //find the user by id and select the password field
+  const user = await User.findById(req.user.id).select('+password');
+  //check the currentPassword of user
+  if (!(await user.correctPassword(currentPassword, user.password))) {
+    return next(new AppError('Your current password is incorect', 400));
+  }
+  //modefy the user password and passwordConfirm with updated password
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  //save the modefied user
+  await user.save();
+
+  //create and send JWT token to log in the user
+  createAndSentToken(res, 200, user);
+});
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  
 });
