@@ -203,7 +203,3 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   //create and send JWT token to log in the user
   createAndSentToken(res, 200, user);
 });
-
-exports.updateUser = catchAsync(async (req, res, next) => {
-  
-});

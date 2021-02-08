@@ -64,3 +64,33 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     data: null
   });
 });
+
+//This function is for filtering unwanted fields
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
+
+exports.updateMe = catchAsync(async (req, res, next) => {
+  //send error if user want to update password with this route
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(
+      new AppError('This route is not for updating password.Please use updatePassword route!', 400)
+    );
+  }
+  //filter unwanted fields
+  const updateData = filterObj(req.body, 'name');
+  //update the current user
+  const user = await User.findByIdAndUpdate(req.user.id, updateData, {
+    runValidators: true,
+    new: true
+  });
+  //send the response
+  res.status(200).json({
+    status: 'success',
+    data: user
+  });
+});
