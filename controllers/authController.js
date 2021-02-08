@@ -14,7 +14,20 @@ const createToken = id => {
 
 //create and send JWT token
 const createAndSentToken = (res, statusCode, user) => {
+  //create token with user id payload
   const token = createToken(user._id);
+  //seting cookie options
+  const cookieOption = {
+    expires: new Date(Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+    httpOnly: true
+  };
+  //if we are in producuction sent cookie on a secure connection
+  if (process.env.NODE_ENV === 'production') cookieOption.secure = true;
+  //don't show user password
+  user.password = undefined;
+  //send JWT cookie
+  res.cookie('jwt', token, cookieOption);
+  //send the respone with the token and user information
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -26,6 +39,7 @@ const createAndSentToken = (res, statusCode, user) => {
 
 //signing up user to the system
 exports.signup = catchAsync(async (req, res, next) => {
+  //only create the user with allowed fields
   const user = await User.create({
     name: req.body.name,
     photo: req.body.photo,
@@ -61,6 +75,9 @@ exports.protect = catchAsync(async (req, res, next) => {
   let token = '';
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    //in sever rendaring  get the token from cookie
+    token = req.cookies.jwt;
   }
 
   //if there is not token create Error
