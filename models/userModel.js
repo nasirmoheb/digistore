@@ -60,6 +60,16 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+userSchema.pre('save', function(next) {
+  //return to next if the password not modefied or user is new
+  if (!this.isModified('password') || this.isNew) {
+    return next();
+  }
+  //set the chenage password time for security measure if the password change
+  this.passwordChangeAt = Date.now();
+  next();
+});
+
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
