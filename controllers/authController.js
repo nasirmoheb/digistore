@@ -47,7 +47,79 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   });
-  //Create and send JWT token to log in the user
+  //Create random active token
+  const activeToken = user.createUserActiveToken();
+  //after modefing the user save it
+  user.save({ validateBeforeSave: false });
+
+  //create the url of activation
+  const activeUrl = `${req.protocol}://${req.get('host')}/api/v1/user/active/${activeToken}`;
+  //create the message
+  const message = `Hi ${
+    user.name
+  }!\n We are glad that you are useing our website. Please submit a POST request m to:\n ${activeUrl}\n to active your account \n If you do not register in our website, please ignore this email. `;
+
+  // try {
+  //   //send the token to the user email
+  //   await sendEmail({
+  //     email: user.email,
+  //     subject: 'Your Account Activeation Link (Valid for 5 days)',
+  //     message: message
+  //   });
+
+  //   //Send response to the user
+  //   res.status(200).json({
+  //     status: 'success',
+  //     message: `Your activation link has been sent to ${
+  //       user.email
+  //     }.\n Please go to your email and active your account.`,
+  //     data: user
+  //   });
+  // } catch (err) {
+  //   //if there is error delete the user and send error message
+  //   await User.deleteOne({ email: req.body.email });
+  //   res.status(500).json({
+  //     status: 'Error',
+  //     message: 'There was error in sending email'
+  //   });
+  // }
+
+  res.status(200).json({
+    status: 'success',
+    message: message,
+    data: user
+  });
+});
+
+exports.activeUser = catchAsync(async (req, res, next) => {
+  //Get the token from request
+  const { token } = req.params;
+
+  //Create the has of token and check it with activeHashToken
+
+  const hashToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex');
+
+  //get the user based on hashToken
+  const user = await User.findOne({
+    activeHashToken: hashToken,
+    activeTokenExpires: { $gt: Date.now() }
+  });
+
+  //if the is not a user means token is incorrect or expired
+  if (!user) {
+    return next(new AppError('Your token is incorrect or expired ', 400));
+  }
+
+  //active the user
+  user.active = true;
+  user.activeHashToken = undefined;
+  user.activeTokenExpires = undefined;
+  await user.save({ validateBeforeSave: false });
+
+  //create and send JWT to the user
   createAndSentToken(res, 200, user);
 });
 
@@ -59,13 +131,21 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError('Please provide your email and password', 400));
   }
-  //check if user exists and password is corect
+  //check if user exists and active and password is corect
 
   const user = await User.findOne({ email }).select('+password');
+
+  //if Email or password is incorrect send error message
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Your Email or Password is incorrect!', 400));
   }
 
+  //If user is not actived send error message
+  if (!user.active) {
+    return next(
+      new AppError('Your account is not acctivated.Please go to your email and active it!', 400)
+    );
+  }
   //if everything is ok create and send token to client
   createAndSentToken(res, 200, user);
 });

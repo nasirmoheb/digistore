@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, 'please provide a valid email!']
   },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  active: {
+    type: Boolean,
+    default: false
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -39,6 +43,8 @@ const userSchema = new mongoose.Schema({
       message: 'Your password and password confirm is not same.'
     }
   },
+  activeHashToken: String,
+  activeTokenExpires: Date,
   passwordChangeAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date
@@ -84,6 +90,19 @@ userSchema.methods.changePasswordAfter = function(JWTTimestamp) {
   }
   //By default it return false
   return false;
+};
+
+userSchema.methods.createUserActiveToken = function() {
+  const activeToken = crypto.randomBytes(32).toString('hex');
+
+  this.activeHashToken = crypto
+    .createHash('sha256')
+    .update(activeToken)
+    .digest('hex');
+
+  this.activeTokenExpires = Date.now() + 5 * 24 * 60 * 60 * 1000;
+
+  return activeToken;
 };
 
 userSchema.methods.createPasswordResetToken = function() {
