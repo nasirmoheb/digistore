@@ -1,5 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const productRoute = require('./routes/productRoute');
 const userRoute = require('./routes/userRoute');
@@ -11,12 +17,59 @@ const AppError = require('./utils/appError');
 
 const app = express();
 
-//*** */ MIDDLE WARES
-app.use(express.json());
+//*** */ Parser MIDDLE WARES
+//JSON parser and limit the sending json
+app.use(express.json({ limit: '50kb' }));
+
+//parse the cookie
+app.use(cookieParser());
+
+//*** */ SECURITY MIDDLEWARES
+//
+
+//Preventing from DOS and BRUTE FORCE ATTACK
+const limiter = rateLimit({
+  //maximum request
+  max: 100,
+  //maximum request in time
+  windowMs: 60 * 60 * 1000,
+  //message
+  message: 'You have used your limit 100 request in one hour please use later'
+});
+app.use('/api', limiter);
+
+//seting http security headers
+app.use(helmet());
+
+//Preventing NO-SQL injenction
+app.use(mongoSanitize());
+
+//Preventin XSS Attack
+app.use(xss());
+
+//Preventing parameter polution
+app.use(
+  hpp({
+    //whitelist some parameters that are safe
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price'
+    ]
+  })
+);
+//
+//* ***/ SECURITY MIDDLEWARES
 
 //development Loger
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
+//App Routes
 app.use('/api/v1/product', productRoute);
 app.use('/api/v1/user', userRoute);
 
