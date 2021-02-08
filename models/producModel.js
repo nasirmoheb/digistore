@@ -27,6 +27,8 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+productSchema.index({ name: 'text' });
+
 //create product model from product schema
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;

@@ -6,6 +6,7 @@ const APIFeature = require('./../utils/apiFeature');
 exports.getAllProduct = catchAsync(async (req, res, next) => {
   const features = new APIFeature(Product.find(), req.query)
     .filter()
+    .search()
     .sort()
     .limitFields()
     .paginate();

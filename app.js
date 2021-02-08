@@ -51,17 +51,10 @@ app.use(xss());
 app.use(
   hpp({
     //whitelist some parameters that are safe
-    whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'maxGroupSize',
-      'difficulty',
-      'price'
-    ]
+    whitelist: ['name', 'price']
   })
 );
-//
+
 //* ***/ SECURITY MIDDLEWARES
 
 //development Loger

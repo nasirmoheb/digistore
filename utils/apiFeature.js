@@ -8,7 +8,7 @@ class APIFeature {
     //1)Filtering
     let queryObj = { ...this.queryStr };
     //exclude fields that are not in database
-    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    const excludedFields = ['page', 'sort', 'limit', 'fields', 'search'];
     excludedFields.forEach(e => delete queryObj[e]);
 
     //2)Advanced Filtering
@@ -17,6 +17,17 @@ class APIFeature {
     queryObj = JSON.parse(queryStr);
 
     this.query = this.query.find(queryObj);
+    return this;
+  }
+
+  search() {
+    if (this.queryStr.search) {
+      const searchStr = this.queryStr.search;
+      this.query = this.query
+        .find({ $text: { $search: searchStr } })
+        .select({ score: { $meta: 'textScore' } })
+        .sort({ score: { $meta: 'textScore' } });
+    }
     return this;
   }
 
