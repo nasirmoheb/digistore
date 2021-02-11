@@ -10,6 +10,7 @@ const hpp = require('hpp');
 const productRoute = require('./routes/productRoute');
 const userRoute = require('./routes/userRoute');
 const reviewRoute = require('./routes/reviewRoute');
+const categoryRoute = require('./routes/categoryRoute');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -67,6 +68,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/v1/product', productRoute);
 app.use('/api/v1/user', userRoute);
 app.use('/api/v1/review', reviewRoute);
+app.use('/api/v1/category', categoryRoute);
 
 //handle request not fount error
 app.all('*', (req, res, next) => {
