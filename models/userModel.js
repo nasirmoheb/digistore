@@ -4,68 +4,82 @@ const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
 //defining user schema
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: [true, 'please tell us your name!'],
-    maxlength: [20, "A user name can't be more than 20 characters!"],
-    minlength: [4, 'A user name must be longer than 4 characters!']
-  },
-  photo: { type: String, default: 'default.jpeg' },
-  email: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    unique: true,
-    required: [true, 'please tell us your email!'],
-    validate: [validator.isEmail, 'please provide a valid email!']
-  },
-  addresses: [
-    {
-      country: String,
-      province: String,
-      city: String,
-      address: String,
-      phone: String
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: [true, 'please tell us your name!'],
+      maxlength: [20, "A user name can't be more than 20 characters!"],
+      minlength: [4, 'A user name must be longer than 4 characters!']
+    },
+    photo: { type: String, default: 'default.jpeg' },
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      unique: true,
+      required: [true, 'please tell us your email!'],
+      validate: [validator.isEmail, 'please provide a valid email!']
+    },
+    addresses: [
+      {
+        country: String,
+        province: String,
+        city: String,
+        address: String,
+        phone: String
+      }
+    ],
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    password: {
+      type: String,
+      required: [true, 'Please provide a password'],
+      minlength: [8, 'A password must be at least 8 characters'],
+      select: false
+    },
+    passwordConfirm: {
+      type: String,
+      required: [true, 'Please confirm your password'],
+      validate: {
+        //THIS WILL WORK ONLY ON SAVE
+        validator: function(val) {
+          return val === this.password;
+        },
+        message: 'Your password and password confirm is not same.'
+      }
+    },
+    activeHashToken: String,
+    activeTokenExpires: Date,
+    passwordChangeAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    createdAt: {
+      type: Date,
+      default: Date.now()
     }
-  ],
-  role: { type: String, enum: ['user', 'admin'], default: 'user' },
-  active: {
-    type: Boolean,
-    default: false
   },
-  password: {
-    type: String,
-    required: [true, 'Please provide a password'],
-    minlength: [8, 'A password must be at least 8 characters'],
-    select: false
-  },
-  passwordConfirm: {
-    type: String,
-    required: [true, 'Please confirm your password'],
-    validate: {
-      //THIS WILL WORK ONLY ON SAVE
-      validator: function(val) {
-        return val === this.password;
-      },
-      message: 'Your password and password confirm is not same.'
-    }
-  },
-  activeHashToken: String,
-  activeTokenExpires: Date,
-  passwordChangeAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  createdAt: {
-    type: Date,
-    default: Date.now()
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
-});
+);
 
 userSchema.pre(/^find/, function(next) {
   this.select('-__v');
   next();
+});
+
+//Get all reviews of a user
+//Virtual populate
+userSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'user',
+  localField: '_id'
 });
 
 userSchema.pre('save', async function(next) {
