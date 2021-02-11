@@ -21,6 +21,15 @@ const userSchema = new mongoose.Schema({
     required: [true, 'please tell us your email!'],
     validate: [validator.isEmail, 'please provide a valid email!']
   },
+  addresses: [
+    {
+      country: String,
+      province: String,
+      city: String,
+      address: String,
+      phone: String
+    }
+  ],
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   active: {
     type: Boolean,
@@ -47,7 +56,11 @@ const userSchema = new mongoose.Schema({
   activeTokenExpires: Date,
   passwordChangeAt: Date,
   passwordResetToken: String,
-  passwordResetExpires: Date
+  passwordResetExpires: Date,
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
 userSchema.pre(/^find/, function(next) {
