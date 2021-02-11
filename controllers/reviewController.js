@@ -12,7 +12,7 @@ exports.createReview = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllReview = catchAsync(async (req, res, next) => {
-  const review = await Review.find();
+  const review = await Review.find().populate('user');
 
   res.status(200).json({
     status: 'success',
@@ -21,7 +21,7 @@ exports.getAllReview = catchAsync(async (req, res, next) => {
 });
 
 exports.getReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findById(req.params.id);
+  const review = await Review.findById(req.params.id).populate('user');
 
   if (!review) {
     return next(new AppError('No review found with that ID', 404));
