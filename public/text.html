@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/glide/glide.core.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="glide">
+        <div data-glide-el="track" class="glide__track">
+            <ul class="glide__slides">
+                <li class="glide__slide">1</li>
+                <li class="glide__slide">2</li>
+                <li class="glide__slide">4</li>
+            </ul>
+        </div>
+        <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                Prev
+            </button>
+            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                Next
+            </button>
+        </div>
+    </div>
+
+    <script src="node_modules/@glidejs/glide/dist/glide.min.js"></script>
+
+    <script>
+        new Glide('.glide').mount();
+    </script>
+
+
+</body>
+
+</html>

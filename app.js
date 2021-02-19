@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -11,13 +12,18 @@ const productRoute = require('./routes/productRoute');
 const userRoute = require('./routes/userRoute');
 const reviewRoute = require('./routes/reviewRoute');
 const categoryRoute = require('./routes/categoryRoute');
+const viewRoute = require('./routes/viewRoute');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
 // ***********************/
 // INITIALIZING
 
+//setting the view engine to pug
 const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 //*** */ Parser MIDDLE WARES
 //JSON parser and limit the sending json
@@ -64,11 +70,14 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 //App Routes
 app.use('/api/v1/product', productRoute);
 app.use('/api/v1/user', userRoute);
 app.use('/api/v1/review', reviewRoute);
 app.use('/api/v1/category', categoryRoute);
+app.use('/', viewRoute);
 
 //handle request not fount error
 app.all('*', (req, res, next) => {

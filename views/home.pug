@@ -1,0 +1,176 @@
+extends base
+
+block content
+    .glide.hero__glide
+    .glide__track(data-glide-el='track')
+        ul.glide__slides
+            li.glide__slide
+                .hero
+                    .header__container
+                        .header__description
+                            h3.header__label New Inspiration 2020
+                            h1.header__title PHONES MADE FOR YOU!
+                            p.header__paragraph
+                                | Trending mobile in 2021
+                            a.header__btn(href='') SHOP NOW
+                        .header__banner
+                            img.header__image(src='./images/banner_01.png' alt='banner_1')
+    .glide__arrows(data-glide-el='controls')
+        button.glide__arrow.glide__arrow--left(data-glide-dir='<')
+            svg
+                use(xlink:href='./images/sprite.svg#icon-arrow-left2')
+        button.glide__arrow.glide__arrow--right(data-glide-dir='>')
+            svg
+                use(xlink:href='./images/sprite.svg#icon-arrow-right2')
+    section.product
+        .product__category
+            h2 Latest products
+        .products__cart
+            .glide.latest__product--glide
+                .glide__track(data-glide-el='track')
+                    ul.glide__slides
+                        li.glide__slide
+                            .cart
+                                img.cart__image(src='./images/products/headphone/headphone1.jpeg' alt='Iphone 12')
+                                a.cart__title(href='#') Iphone 12 Ultra
+                                .rating
+                                    span
+                                        svg.star
+                                            use(xlink:href='./images/sprite.svg#icon-star-full')
+                                    span
+                                        svg.star
+                                            use(xlink:href='./images/sprite.svg#icon-star-full')
+                                    span
+                                        svg.star
+                                            use(xlink:href='./images/sprite.svg#icon-star-full')
+                                    span
+                                        svg.star
+                                            use(xlink:href='./images/sprite.svg#icon-star-full')
+                                    span
+                                        svg.star
+                                            use(xlink:href='./images/sprite.svg#icon-star-full')
+                                h2.cart__price 780$
+                                a.cart__btn(href='#') Add to cart
+                .glide__arrows(data-glide-el='controls')
+                    button.glide__arrow.glide__arrow--left(data-glide-dir='<')
+                        svg
+                            use(xlink:href='./images/sprite.svg#icon-arrow-left2')
+                    button.glide__arrow.glide__arrow--right(data-glide-dir='>')
+                        svg
+                            use(xlink:href='./images/sprite.svg#icon-arrow-right2')
+        .product__category
+            h2 Trending products
+    section.feature
+        .feature__item
+            span
+                svg
+                    use(xlink:href='./images/sprite.svg#icon-truck')
+            h4.feature__title FREE SHIPPING
+        .feature__item
+            span
+                svg
+                    use(xlink:href='./images/sprite.svg#icon-heart-o')
+            h4.feature__title 100% ORIGINAL
+        .feature__item
+            span
+                svg
+                    use(xlink:href='./images/sprite.svg#icon-location')
+            h4.feature__title PAY ON DELIVERY
+        .feature__item
+            span
+                svg
+                    use(xlink:href='./images/sprite.svg#icon-phone')
+            h4.feature__title 24/7 ONLINE SUPPORT
+    section.testimonial
+        .testimonial__item
+            .user__photo
+                img(src='./images/profile1.jpg' alt='')
+            .user__name John smith
+            .rating
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+            .user__review
+                p
+                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.
+        .testimonial__item
+            .user__photo
+                img(src='./images/profile2.jpg' alt='')
+            .user__name John smith
+            .rating
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+            .user__review
+                p
+                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.
+        .testimonial__item
+            .user__photo
+                img(src='./images/profile3.jpg' alt='')
+            .user__name John smith
+            .rating
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+            .user__review
+                p
+                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.
+        .testimonial__item
+            .user__photo
+                img(src='./images/profile4.jpg' alt='')
+            .user__name John smith
+            .rating
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                span
+                    svg.star
+                        use(xlink:href='./images/sprite.svg#icon-star-full')
+            .user__review
+                p
+                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google font -->
+    <link rel="stylesheet" href="./style/font/Archivo-Regular.ttf" />
+    <link rel="stylesheet" href="./style/font/Archivo-Medium.ttf" />
+    <link rel="stylesheet" href="./style/font/Archivo-Bold.ttf" />
+
+    <!-- Glidejs Carousel -->
+    <link rel="stylesheet" href="./style/glide/glide.core.min.css" />
+    <link rel="stylesheet" href="./style/glide/glide.theme.min.css" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="./style/style.css" />
+
+    <title>Iphone 12 | DigiStore</title>
+</head>
+
+<body>
+    <!-- ===========  
+          Header
+       =========== -->
+
+    <header class="header" id="header">
+        <!-- Navigation -->
+        <div class="navigation">
+            <div class="container">
+                <nav class="nav">
+                    <div class="nav__hamburger">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#icon-menu">
+                        </svg>
+                    </div>
+                    <div class="nav__logo">
+                        <a href="" class="scroll-link"><span>Digi</span>Store</a>
+                    </div>
+                    <div class="nav__menu ">
+                        <div class="nav__menu-top">
+                            <span class="nav__catagory"><span class="digi">Digi</span>Store</span>
+                            <a href="#" class="close__toggle">
+                                <svg>
+                                    <use xlink:href="./images/sprite.svg#icon-cross"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <ul class="nav__list">
+                            <form action="#" class="search search_list">
+                                <input type="text" class="search__input" placeholder="Search products">
+                                <button class="search__button">
+                                    <svg class="search__icon">
+                                        <use xlink:href="./images/sprite.svg#icon-search"></use>
+                                    </svg>
+                                </button>
+                            </form>
+                            <li class="nav__item"><a href="#header" class="nav__link scroll__link">Home</a></li>
+                            <li class="nav__item"><a href="#catagory" class="nav__link scroll__link">Catagory</a></li>
+                            <li class="nav__item"><a href="#contact" class="nav__link scroll__link">Contact</a></li>
+
+                        </ul>
+                    </div>
+
+
+
+                    <form action="#" class="search">
+                        <input type="text" class="search__input" placeholder="Search products">
+                        <button class="search__button">
+                            <svg class="search__icon">
+                                <use xlink:href="./images/sprite.svg#icon-search"></use>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <div class="nav__icons">
+                        <a href="#" class="icon__item">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#icon-user"></use>
+                            </svg>
+                        </a>
+
+                        <a href="#" class="icon__item">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#icon-shopping-basket"></use>
+                            </svg>
+                            <span id="cart__total">0</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="checkout__cart">
+        <div class="checkout__card">
+            <div class="checkout__card--image">
+                <img src="./images/products/iPhone/iphone1.jpeg" alt="">
+            </div>
+            <div class="checkout__cart--details">
+                <div class="checkout__head">
+                    <div class="checkout__name">Iphone 12</div>
+                    <div class="checkout__price">800$</div>
+                </div>
+                <div class="checkout__tail">
+                    <input type="number" class="checkout__quantity" value="1" min="1" name="quantity">
+                    <div class="checkout__total--price">800$</div>
+                    <button class="delete__cart"><svg>
+                            <use xlink:href="./images/sprite.svg#icon-trash"></use>
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+        <div class="checkout__cart--total">
+            <div class="checkout__block">
+                <div class="cart__total--items">
+                    Items: 4
+                </div>
+                <div class="cart__total">Total: 1800$</div>
+                <button class="checkout__btn">Proceed to checkout</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <footer class=" footer">
+        <div class="footer__nav">
+            <a href="" class="footer__link">Home</a>
+            <a href="" class="footer__link">Catagory</a>
+            <a href="" class="footer__link">products</a>
+            <a href="" class="footer__link">Profile</a>
+            <a href="" class="footer__link">Contact</a>
+            <a href="" class="footer__link">Cart</a>
+            <a href="" class="footer__link">Search</a>
+            <a href="" class="footer__link">Credits</a>
+        </div>
+        <div class="footer__about">
+            <div class="footer__about--title">
+                CONTACT US
+            </div>
+            <div class="footer__about--address">
+                sia gerd street , Mazare-e-sharif, Balkh, Afghanistan <br>
+                digiStore@gmail.com <br>
+                456-456-4512 <br>
+                Mazar, Afghanistan
+            </div>
+        </div>
+    </footer>
+
+    <!-- Glidejs -->
+    <script src="./js/glide/glide.min.js"></script>
+
+    <!-- script -->
+    <script src="./js/index.js"></script>
+    <script src="./js/products.js"></script>
+    <!-- <script src="./js/slider.js"></script> -->
+</body>
+
+</html>

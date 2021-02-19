@@ -1,0 +1,45 @@
+header#header.header
+    // Navigation
+    .navigation
+        .container
+            nav.nav
+                .nav__hamburger
+                    svg
+                        use(xlink:href='./images/sprite.svg#icon-menu')
+                .nav__logo
+                    a.scroll-link(href='')
+                        span Digi
+                        | Store
+                .nav__menu
+                    .nav__menu-top
+                        span.nav__catagory
+                            span.digi Digi
+                            | Store
+                        a.close__toggle(href='#')
+                            svg
+                                use(xlink:href='./images/sprite.svg#icon-cross')
+                    ul.nav__list
+                        form.search.search_list(action='#')
+                            input.search__input(type='text' placeholder='Search products')
+                            button.search__button
+                                svg.search__icon
+                                    use(xlink:href='./images/sprite.svg#icon-search')
+                        li.nav__item
+                            a.nav__link.scroll__link(href='#header') Home
+                        li.nav__item
+                            a.nav__link.scroll__link(href='#catagory') Catagory
+                        li.nav__item
+                            a.nav__link.scroll__link(href='#contact') Contact
+                form.search(action='#')
+                    input.search__input(type='text' placeholder='Search products')
+                    button.search__button
+                        svg.search__icon
+                            use(xlink:href='./images/sprite.svg#icon-search')
+                .nav__icons
+                    a.icon__item(href='#')
+                        svg
+                            use(xlink:href='./images/sprite.svg#icon-user')
+                    a.icon__item(href='#')
+                        svg
+                            use(xlink:href='./images/sprite.svg#icon-shopping-basket')
+                        span#cart__total 0
