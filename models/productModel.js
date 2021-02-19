@@ -21,6 +21,10 @@ const productSchema = new mongoose.Schema(
       type: String
     },
     images: [String],
+    summery: {
+      type: String,
+      trim: true
+    },
     description: {
       type: String,
       trim: true
