@@ -539,7 +539,8 @@ Products
 }
 
 .cart__image {
-  width: 15rem;
+  /* width: 15rem; */
+  height: 20rem;
 }
 
 .cart__title {
@@ -564,6 +565,10 @@ Products
   width: 2rem;
   height: 2rem;
   margin: 0.5rem;
+  fill: var(--grey);
+}
+
+.rating .star--full {
   fill: var(--yellow);
 }
 
@@ -783,7 +788,7 @@ Product description
 }
 
 .product__details--image {
-  width: 30rem;
+  height: 40rem;
 }
 
 .product__details--discreption {
@@ -820,6 +825,7 @@ Product description
   font-size: 1.8rem;
   padding: 1rem;
   color: var(--black2);
+  width: 90%;
 }
 
 .product__details-text {

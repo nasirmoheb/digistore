@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema(
       ref: 'Category',
       required: [true, 'A product must belong to a category']
     },
-    title: {
+    name: {
       type: String,
       required: [true, 'A product must have a name'],
       trim: true,

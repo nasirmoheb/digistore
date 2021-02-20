@@ -22,8 +22,91 @@ footer.footer
             br
             |         2021 &copy; By Nasir Ahmad Moheb
 // Glidejs
-script(src='./js/glide/glide.min.js')
+script(src='/js/glide/glide.min.js')
+script.
+      new Glide('.hero__glide', {
+      type: 'carousel',
+      startAt: 0,
+      autoplay: 4000,
+      hoverpause: true,
+      perView: 1,
+      animationDuration: 1500,
+      animationTimingFunc: 'linear',
+    }).mount();
+
+    new Glide('.latest__product--glide', {
+      type: 'carousel',
+      startAt: 0,
+    //-   autoplay: 5000,
+      hoverpause: true,
+      perView: 4,
+      animationDuration: 1000,
+      animationTimingFunc: 'linear',
+      breakpoints: {
+        1024: {
+          perView: 3
+        },
+        768: {
+          perView: 2
+        },
+        600: {
+          perView: 1
+        }
+      }
+    }).mount();
+
+    new Glide('.trending__product--glide', {
+      type: 'carousel',
+      startAt: 0,
+      autoplay: 5000,
+      hoverpause: true,
+      perView: 4,
+      animationDuration: 1000,
+      animationTimingFunc: 'linear',
+      breakpoints: {
+        1024: {
+          perView: 3
+        },
+        768: {
+          perView: 2
+        },
+        600: {
+          perView: 1
+        }
+      }
+    }).mount(); 
+    new Glide('.product__details--glide', {
+      type: 'carousel',
+      startAt: 0,
+      autoplay: 5000,
+      hoverpause: true,
+      perView: 1,
+      animationDuration: 1000,
+      animationTimingFunc: 'linear',
+    }).mount();
+
+    new Glide('.similar__product--glide', {
+      type: 'carousel',
+      startAt: 0,
+      autoplay: 5000,
+      hoverpause: true,
+      perView: 4,
+      animationDuration: 1000,
+      animationTimingFunc: 'linear',
+      breakpoints: {
+        1024: {
+          perView: 3
+        },
+        768: {
+          perView: 2
+        },
+        600: {
+          perView: 1
+        }
+      }
+    }).mount();
+
 // script
-script(src='./js/index.js')
-script(src='./js/products.js')
+script(src='/js/index.js')
+script(src='/js/products.js')
 // <script src="./js/slider.js"></script>

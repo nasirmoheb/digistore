@@ -1,0 +1,127 @@
+extends base
+
+mixin productStar(product)
+    each star in [1,2,3,4,5]
+        span
+            svg.star(class=`star--${Math.round(product.ratingsAverage) >= star ? 'full':''}`)
+                use(xlink:href='/images/sprite.svg#icon-star-full')
+
+mixin reviewStar(review)
+    each star in [1,2,3,4,5]
+        span
+            svg.star(class=`star--${Math.round(review.rating) >= star ? 'full':''}`)
+                use(xlink:href='/images/sprite.svg#icon-star-full')
+
+
+
+block content
+    section.product__details
+        .product__details--images
+            .glide.product__details--glide
+                .glide__track(data-glide-el='track')
+                    ul.glide__slides
+                        each img in product.images
+                            li.glide__slide
+                                img.product__details--image(src=`/images/${img}.jpeg` alt=`${product.slug}`)
+                .glide__arrows(data-glide-el='controls')
+                    button.glide__arrow.glide__arrow--left(data-glide-dir='<')
+                        svg
+                            use(xlink:href='/images/sprite.svg#icon-arrow-left2')
+                    button.glide__arrow.glide__arrow--right(data-glide-dir='>')
+                        svg
+                            use(xlink:href='/images/sprite.svg#icon-arrow-right2')
+        .product__details--discreption
+            h2.product__details--title= product.name
+            h3.product__details--price= `${product.price}$`
+            .product__details--reveiw
+                .rating
+                   +productStar(product)
+                span.num__review= `${product.ratingsQuantity} Reviews`
+            .product__details--summery=product.summery
+            h3.product__details--company.product__details-text Company: #{product.manufactureDetails.company}
+            h3.product__details--model-number.product__details-text Model Number: #{product.manufactureDetails.modelNumber}
+            h3.product__details--release-date.product__details-text= `Relase Date: ${product.manufactureDetails.releaseDate.toLocaleString('en-us',{month:'long',year:'numeric'})}`
+            h3.product__details--quantity.product__details-text Availability: #{product.quantity} items
+            .shopping__btn
+                a.shopping__btn--item(href='#') Add To Cart
+                a.shopping__btn--item(href='#') Buy Now
+    section.product
+        .product__category
+            h2 Description
+        .product__description
+            -const description = product.description.split('.');
+            each p in description
+                p=p
+    section.product
+        .product__category
+            h2 Reviews
+        .product__review
+            each review in product.reviews
+                .review
+                    .review__header
+                        h4.user__name= review.user.name
+                        .rating
+                            +reviewStar(review)
+                    p.reviw__body= review.review
+        form.review__form
+            textarea.review__input(placeholder='Please write your review')
+            br
+            .add__review
+                input.review__rate(type='range' min='1' max='5')
+                button.submit__review submit review
+    section.product
+        .product__category
+            h2 Similar products
+        .products__cart
+            .glide.similar__product--glide
+                .glide__track(data-glide-el='track')
+                    ul.glide__slides
+                        each item in similarProducts
+                            li.glide__slide
+                                .cart
+                                    img.cart__image(src=`/images/${item.imageCover}.jpeg` alt=`${item.slug}`)
+                                    a.cart__title(href=`/product/${item.slug}`)= item.name
+                                    .rating
+                                        +productStar(product)
+                                    h2.cart__price= item.price
+                                    a.cart__btn(href='#') Add to cart
+                .glide__arrows(data-glide-el='controls')
+                    button.glide__arrow.glide__arrow--left(data-glide-dir='<')
+                        svg
+                            use(xlink:href='/images/sprite.svg#icon-arrow-left2')
+                    button.glide__arrow.glide__arrow--right(data-glide-dir='>')
+                        svg
+                            use(xlink:href='/images/sprite.svg#icon-arrow-right2')
+
+    script(src='/js/glide/glide.min.js')
+    script.
+        new Glide('.product__details--glide', {
+        type: 'carousel',
+        startAt: 0,
+        autoplay: 5000,
+        hoverpause: true,
+        perView: 1,
+        animationDuration: 1000,
+        animationTimingFunc: 'linear',
+        }).mount();
+
+        new Glide('.similar__product--glide', {
+        type: 'carousel',
+        startAt: 0,
+        autoplay: 5000,
+        hoverpause: true,
+        perView: 4,
+        animationDuration: 1000,
+        animationTimingFunc: 'linear',
+        breakpoints: {
+            1024: {
+            perView: 3
+            },
+            768: {
+            perView: 2
+            },
+            600: {
+            perView: 1
+            }
+        }
+        }).mount();

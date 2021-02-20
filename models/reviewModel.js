@@ -35,6 +35,11 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+reviewSchema.pre(/^find/, function(next) {
+  this.populate('user');
+  next();
+});
+
 reviewSchema.index({ user: 1, product: 1 }, { unique: true });
 
 //calculate Average Rating and Rating quantity

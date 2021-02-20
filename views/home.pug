@@ -1,27 +1,39 @@
 extends base
 
+mixin star(product)
+    each star in [1,2,3,4,5]
+        span
+            svg.star(class=`star--${Math.round(product.ratingsAverage) >= star ? 'full':''}`)
+                use(xlink:href='/images/sprite.svg#icon-star-full')
+
+mixin star()
+    for x in [1,2,3,4,5]   
+        span
+            svg.star(class='star--full')
+                use(xlink:href='./images/sprite.svg#icon-star-full')
+
 block content
     .glide.hero__glide
-    .glide__track(data-glide-el='track')
-        ul.glide__slides
-            li.glide__slide
-                .hero
-                    .header__container
-                        .header__description
-                            h3.header__label New Inspiration 2020
-                            h1.header__title PHONES MADE FOR YOU!
-                            p.header__paragraph
-                                | Trending mobile in 2021
-                            a.header__btn(href='') SHOP NOW
-                        .header__banner
-                            img.header__image(src='./images/banner_01.png' alt='banner_1')
-    .glide__arrows(data-glide-el='controls')
-        button.glide__arrow.glide__arrow--left(data-glide-dir='<')
-            svg
-                use(xlink:href='./images/sprite.svg#icon-arrow-left2')
-        button.glide__arrow.glide__arrow--right(data-glide-dir='>')
-            svg
-                use(xlink:href='./images/sprite.svg#icon-arrow-right2')
+        .glide__track(data-glide-el='track')
+            ul.glide__slides
+                li.glide__slide
+                    .hero
+                        .header__container
+                            .header__description
+                                h3.header__label New Inspiration 2020
+                                h1.header__title PHONES MADE FOR YOU!
+                                p.header__paragraph
+                                    | Trending mobile in 2021
+                                a.header__btn(href='') SHOP NOW
+                            .header__banner
+                                img.header__image(src='/images/banner_01.png' alt='banner_1')
+        .glide__arrows(data-glide-el='controls')
+            button.glide__arrow.glide__arrow--left(data-glide-dir='<')
+                svg
+                    use(xlink:href='/images/sprite.svg#icon-arrow-left2')
+            button.glide__arrow.glide__arrow--right(data-glide-dir='>')
+                svg
+                    use(xlink:href='/images/sprite.svg#icon-arrow-right2')
     section.product
         .product__category
             h2 Latest products
@@ -29,37 +41,46 @@ block content
             .glide.latest__product--glide
                 .glide__track(data-glide-el='track')
                     ul.glide__slides
-                        li.glide__slide
-                            .cart
-                                img.cart__image(src='./images/products/headphone/headphone1.jpeg' alt='Iphone 12')
-                                a.cart__title(href='#') Iphone 12 Ultra
-                                .rating
-                                    span
-                                        svg.star
-                                            use(xlink:href='./images/sprite.svg#icon-star-full')
-                                    span
-                                        svg.star
-                                            use(xlink:href='./images/sprite.svg#icon-star-full')
-                                    span
-                                        svg.star
-                                            use(xlink:href='./images/sprite.svg#icon-star-full')
-                                    span
-                                        svg.star
-                                            use(xlink:href='./images/sprite.svg#icon-star-full')
-                                    span
-                                        svg.star
-                                            use(xlink:href='./images/sprite.svg#icon-star-full')
-                                h2.cart__price 780$
-                                a.cart__btn(href='#') Add to cart
+                        each product in latestProducts
+                            li.glide__slide
+                                .cart
+                                    img.cart__image(src=`/images/${product.imageCover}.jpeg` alt=`${product.name}`)
+                                    a.cart__title(href=`/product/${product.slug}`)=product.name
+                                    .rating
+                                        +star(product)
+
+                                    h2.cart__price= `${product.price}$`
+                                    a.cart__btn(href='#') Add to cart
                 .glide__arrows(data-glide-el='controls')
                     button.glide__arrow.glide__arrow--left(data-glide-dir='<')
                         svg
-                            use(xlink:href='./images/sprite.svg#icon-arrow-left2')
+                            use(xlink:href='/images/sprite.svg#icon-arrow-left2')
                     button.glide__arrow.glide__arrow--right(data-glide-dir='>')
                         svg
-                            use(xlink:href='./images/sprite.svg#icon-arrow-right2')
+                            use(xlink:href='/images/sprite.svg#icon-arrow-right2')
         .product__category
             h2 Trending products
+        .products__cart
+            .glide.trending__product--glide
+                .glide__track(data-glide-el='track')
+                    ul.glide__slides
+                        each product in trendingProducts
+                            li.glide__slide
+                                .cart
+                                    img.cart__image(src=`/images/${product.imageCover}.jpeg` alt=`${product.name}`)
+                                    a.cart__title(href=`/product/${product.slug}`)=product.name
+                                    .rating
+                                        +star(product)
+
+                                    h2.cart__price= `${product.price}$`
+                                    a.cart__btn(href='#') Add to cart
+                .glide__arrows(data-glide-el='controls')
+                    button.glide__arrow.glide__arrow--left(data-glide-dir='<')
+                        svg
+                            use(xlink:href='/images/sprite.svg#icon-arrow-left2')
+                    button.glide__arrow.glide__arrow--right(data-glide-dir='>')
+                        svg
+                            use(xlink:href='/images/sprite.svg#icon-arrow-right2')
     section.feature
         .feature__item
             span
@@ -87,21 +108,8 @@ block content
                 img(src='./images/profile1.jpg' alt='')
             .user__name John smith
             .rating
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                +star()
+
             .user__review
                 p
                     | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.
@@ -110,21 +118,7 @@ block content
                 img(src='./images/profile2.jpg' alt='')
             .user__name John smith
             .rating
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                +star()
             .user__review
                 p
                     | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.
@@ -133,21 +127,7 @@ block content
                 img(src='./images/profile3.jpg' alt='')
             .user__name John smith
             .rating
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
+               +star()
             .user__review
                 p
                     | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.
@@ -156,21 +136,7 @@ block content
                 img(src='./images/profile4.jpg' alt='')
             .user__name John smith
             .rating
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
-                span
-                    svg.star
-                        use(xlink:href='./images/sprite.svg#icon-star-full')
+                +star()
             .user__review
                 p
                     | Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo a nihil sit eligendi vel tenetur molestias.

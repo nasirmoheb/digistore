@@ -3,8 +3,8 @@ const express = require('express');
 const viewController = require('./../controllers/viewController');
 
 const router = express.Router();
-router.use('/', viewController.getHome);
+router.use('/product/:slug', viewController.getProduct);
 
-router.use('/product', viewController.getProduct);
+router.use('/', viewController.getHome);
 
 module.exports = router;
