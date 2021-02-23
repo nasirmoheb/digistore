@@ -1,0 +1,62 @@
+extends base
+
+block content
+    .Profile
+        .profile__menu--toggle.profile__menu--open
+            svg
+                use(xlink:href='/images/sprite.svg#icon-arrow-right2')
+        .profile__menu--toggle.profile__menu--close
+            svg
+                use(xlink:href='/images/sprite.svg#icon-arrow-left2')
+        .profile__menu
+            .user__picture
+                img(src=`/images/${user.photo}.jpg` alt='')
+            .user__name= user.name
+            .user__nav
+                a.user__order#logout(href='#')
+                    | Logout
+                a.user__order(href='#')
+                    | My Orders
+                a.user__review(href='#')
+                    | My Reviews
+                a.user__setting(href='#')
+                    | Settings
+            if user.role ==='admin'
+                .admin__nav
+                    h3.admin__nav--title Admin
+                    .spreator
+                    a.admin__products(href='#') Manage Products
+                    a.admin__users(href='#') Manage Users
+                    a.admin__reviews(href='#') Manage Reviews
+                    a.admin__catagories(href='#') Manage Categories
+                    a.admin__orders(href='#') Manage Orders
+        .profile__details
+            .settings
+                h2.setting__head Your Account settings
+                .settings__details
+                    .form__group.form__group--name
+                        label(for='name') Name:
+                        input#name(type='text' value=`${user.name}` name='')
+                    .form__group.form__group--email
+                        label(for='email') Email:
+                        input#email(type='email' value=`${user.email}` name='')
+                    .form__group--photo
+                        img(src=`/images/${user.photo}.jpg` alt='')
+                        input#photo(type='file' name='photo' accept='image/*' placeholder='C')
+                        label(for='photo') Choose new photo
+                    button.save__change--btn.save__data Save Changes
+                .settings__password
+                    .change__password Change password
+                    .spreator
+                    .form__group.change__pass.form__group--currentPassword
+                        label(for='c_pass') Current Password:
+                        input#c_pass(type='password' value='********' name='')
+                    .form__group.change__pass.form__group--newPassword
+                        label(for='n__pass') New Password:
+                        input#n_pass(type='password' value='********' name='')
+                    .form__group.change__pass.form__group--confirmPassword
+                        label(for='co__pass') Confirm Password:
+                        input#co_pass(type='password' value='********' name='')
+                    button.save__change--btn.save__password Save Changes
+    script(src='/js/profilebundle.js')
+    

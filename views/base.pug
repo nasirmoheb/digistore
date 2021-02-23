@@ -5,12 +5,12 @@ html(lang='en')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
         // Google font
         // Glidejs Carousel
-        link(rel='stylesheet' href='./style/glide/glide.core.min.css')
-        link(rel='stylesheet' href='./style/glide/glide.theme.min.css')
+        link(rel='stylesheet' href='/style/glide/glide.core.min.css')
+        link(rel='stylesheet' href='/style/glide/glide.theme.min.css')
         // Favicon
-        link(rel='shortcut icon' href='./images/favicon.ico' type='image/x-icon')
+        link(rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon')
         // stylesheet
-        link(rel='stylesheet' href='./style/style.css')
+        link(rel='stylesheet' href='/style/style.css')
         title DigiStore
     body
         //Header
@@ -19,3 +19,5 @@ html(lang='en')
         block content                      
         //Footer                        
         include _footer
+        
+        script(src='/js/bundle.js')

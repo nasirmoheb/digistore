@@ -539,7 +539,8 @@ Products
 }
 
 .cart__image {
-  width: 15rem;
+  /* width: 15rem; */
+  height: 20rem;
 }
 
 .cart__title {
@@ -564,6 +565,10 @@ Products
   width: 2rem;
   height: 2rem;
   margin: 0.5rem;
+  fill: var(--grey);
+}
+
+.rating .star--full {
   fill: var(--yellow);
 }
 
@@ -783,7 +788,7 @@ Product description
 }
 
 .product__details--image {
-  width: 30rem;
+  height: 40rem;
 }
 
 .product__details--discreption {
@@ -820,6 +825,7 @@ Product description
   font-size: 1.8rem;
   padding: 1rem;
   color: var(--black2);
+  width: 90%;
 }
 
 .product__details-text {
@@ -1385,6 +1391,16 @@ Profile
   margin: 0 1rem;
 }
 
+.user__nav #logout {
+  width: 9rem;
+  background-color: var(--orange);
+  color: var(--white);
+  border-radius: 100px;
+  padding: 1rem;
+  margin-left: auto;
+  margin-bottom: 3rem;
+}
+
 .user__nav a {
   display: inline-block;
   padding: 1.5rem;
@@ -1564,4 +1580,129 @@ Profile Media Query
     font-size: 1.5rem;
     padding: 1rem 2rem;
   }
+}
+
+/*
+======================
+Login Form
+======================
+*/
+
+.login-page {
+  padding: 50px 0;
+  background: radial-gradient(#fff, #ffd6d6);
+}
+
+.account-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.form-container {
+  width: 300px;
+  height: 400px;
+  background: #fff;
+  position: relative;
+  text-align: center;
+  padding: 20px 0;
+  margin: 10rem auto 7rem auto;
+  box-shadow: 0 0 20px 0px rgb(0 0 0 / 10%);
+  overflow: hidden;
+}
+.form-btn {
+  display: inline-block;
+}
+
+.form-container span {
+  font-weight: bold;
+  padding: 0 10px;
+  color: #555;
+  cursor: pointer;
+  width: 100px;
+  display: inline-block;
+}
+
+#Indicator {
+  width: 100px;
+  border: none;
+  background: var(--orange);
+  height: 3px;
+  margin-top: 8px;
+  transform: translateX(100px);
+  transition: transform 1s;
+}
+
+#LoginForm {
+  left: -300px;
+}
+
+#RegForm {
+  left: 0;
+}
+
+.form-container form {
+  max-width: 300px;
+  padding: 0 20px;
+  position: absolute;
+  top: 130px;
+  transition: transform 1s;
+}
+
+form input {
+  width: 100%;
+  height: 30px;
+  margin: 10px 0;
+  padding: 0px 10px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 30px;
+  background: var(--orange);
+  color: #fff;
+  margin: 30px 0;
+  border-radius: 30px;
+  transition: background 0.5s;
+}
+
+form .btn {
+  width: 100%;
+  border: none;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+form a {
+  font-size: 12px;
+}
+
+/*
+======================
+Show alert
+======================
+*/
+
+.alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 1.6rem 15rem;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+}
+.alert--success {
+  background-color: var(--green);
+}
+.alert--error {
+  background-color: var(--orange);
 }

@@ -1,3 +1,9 @@
+/*eslint-disable*/
+
+import '@babel/polyfill';
+import { login, register } from './login';
+import Glide from '@glidejs/glide';
+
 /*
 =============
 Navigation
@@ -9,19 +15,21 @@ const navClose = document.querySelector('.close__toggle');
 const menu = document.querySelector('.nav__menu');
 const navContainer = document.querySelector('.nav__menu');
 
-navOpen.addEventListener('click', () => {
-  menu.classList.add('open');
-  document.body.classList.add('active');
-  navContainer.style.left = '0';
-  navContainer.style.width = '30rem';
-});
+if (navOpen)
+  navOpen.addEventListener('click', () => {
+    menu.classList.add('open');
+    document.body.classList.add('active');
+    navContainer.style.left = '0';
+    navContainer.style.width = '30rem';
+  });
 
-navClose.addEventListener('click', () => {
-  menu.classList.remove('open');
-  document.body.classList.remove('active');
-  navContainer.style.left = '-30rem';
-  navContainer.style.width = '';
-});
+if (navClose)
+  navClose.addEventListener('click', () => {
+    menu.classList.remove('open');
+    document.body.classList.remove('active');
+    navContainer.style.left = '-30rem';
+    navContainer.style.width = '';
+  });
 
 /*
 =============
@@ -33,16 +41,20 @@ const profileOpen = document.querySelector('.profile__menu--open');
 const profileClose = document.querySelector('.profile__menu--close');
 const profileContainer = document.querySelector('.profile__menu');
 
-profileOpen.addEventListener('click', () => {
-  profileContainer.style.width = '30rem';
-  profileContainer.style.left = '0';
-  profileOpen.style.display = 'none';
-  profileClose.style.display = 'block';
-});
+if (profileOpen){
+  profileOpen.addEventListener('click', () => {
+    profileContainer.style.width = '30rem';
+    profileContainer.style.left = '0';
+    profileOpen.style.display = 'none';
+    profileClose.style.display = 'block';
+  });
+}
 
-profileClose.addEventListener('click', () => {
-  profileContainer.style.width = '0';
-  profileContainer.style.left = '-30rem';
-  profileOpen.style.display = 'block';
-  profileClose.style.display = 'none';
-});
+if (profileClose){
+  profileClose.addEventListener('click', () => {
+    profileContainer.style.width = '0';
+    profileContainer.style.left = '-30rem';
+    profileOpen.style.display = 'block';
+    profileClose.style.display = 'none';
+  });
+}

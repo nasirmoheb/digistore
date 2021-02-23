@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema(
       ref: 'Category',
       required: [true, 'A product must belong to a category']
     },
-    title: {
+    name: {
       type: String,
       required: [true, 'A product must have a name'],
       trim: true,
@@ -89,7 +89,7 @@ productSchema.virtual('reviews', {
 
 //Creat slug from Title of product
 productSchema.pre('save', function(next) {
-  this.slug = slugify(this.title, { lower: true });
+  this.slug = slugify(this.name, { lower: true });
   next();
 });
 

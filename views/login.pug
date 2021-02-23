@@ -1,0 +1,23 @@
+extends base
+
+block content
+    div.login-page
+        div.account-form
+            div.form-container
+                div.form-btn
+                    span(onclick='loginToggle()') Login
+                    span(onclick='registerToggle()') Register
+                    hr#Indicator
+                form#LoginForm
+                    input( type='email' id='loginEmail' placeholder='Email' required)
+                    input( type='password' id='loginPassword' placeholder='Password' required)
+                    button( type='submit' id='loginBtn' class='btn') Login
+                    a( href='') Forgot password
+                form#RegForm
+                    input( type='text' id='regName' placeholder='Name' required)
+                    input( type='email' id='regEmail' placeholder='Email' required)
+                    input( type='password' id='regPass' placeholder='Password' required)
+                    input( type='password' id='regConfirmPass' placeholder='confirm password' required)
+                    button( type='submit' class='btn') Register
+    script(src='/js/loginbundle.js')
+    script(src='/js/account.js')

@@ -123,7 +123,7 @@ exports.activeUser = catchAsync(async (req, res, next) => {
   createAndSentToken(res, 200, user);
 });
 
-//login up user to the system
+//login user to the system
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -149,6 +149,11 @@ exports.login = catchAsync(async (req, res, next) => {
   //if everything is ok create and send token to client
   createAndSentToken(res, 200, user);
 });
+
+exports.logout = (req, res) => {
+  res.cookie('jwt', '', { expires: new Date(Date.now() + 1000), httpOnly: true });
+  res.status(200).json({ status: 'success', message: 'loged out successfully' });
+};
 
 exports.protect = catchAsync(async (req, res, next) => {
   //1)Get token and check if it's there
@@ -187,6 +192,31 @@ exports.protect = catchAsync(async (req, res, next) => {
   //GRANT ACESS TO PROTECT ROUTE
   next();
 });
+
+//This middle ware is for chacking if user is logged in
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
+
+      const user = await User.findById(decoded.id);
+      if (!user) {
+        return next();
+      }
+
+      if (user.changePasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      //If there is a logged in user we passed to PUG template and every template access to it
+      res.locals.user = user;
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
+};
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
