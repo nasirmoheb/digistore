@@ -30,9 +30,8 @@ header#header.header
                             .dropdown
                                 a.dropbtn CATEGORY
                                     .dropdown-content
-                                        a( href="#") Phone
-                                        a( href="#") Tablet
-                                        a( href="#") Computer
+                                        each catagory in catagories
+                                            a( href=`/category/${catagory.slug}`)= catagory.name
                         li.nav__item
                             a.nav__link.scroll__link(href='#contact') Contact
                 form.search.top__search__form(action="/search" method="GET")

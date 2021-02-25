@@ -1,0 +1,19 @@
+extends base
+
+mixin star(product)
+    each star in [1,2,3,4,5]
+        span
+            svg.star(class=`star--${Math.round(product.ratingsAverage) >= star ? 'full':''}`)
+                use(xlink:href='/images/sprite.svg#icon-star-full')
+
+block content
+    section.category__products
+        each product in products
+            .cart
+                img.cart__image(src=`/images/${product.imageCover}.jpeg` alt=`${product.name}`)
+                a.cart__title(href=`/product/${product.slug}`)=product.name
+                .rating
+                    +star(product)
+
+                h2.cart__price= `${product.price}$`
+                a.cart__btn(href='#') Add to cart

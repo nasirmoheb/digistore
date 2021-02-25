@@ -1,6 +1,20 @@
 const Product = require('./../models/productModel');
+const Category = require('./../models/catagoryModel');
 
 const catchAsync = require('./../utils/catchAsync');
+
+exports.getCatagories = catchAsync(async (req, res, next) => {
+  const catagories = await Category.find();
+  res.locals.catagories = catagories;
+  next();
+});
+
+exports.getCategory = catchAsync(async (req, res, next) => {
+  const products = await Category.findOne({ slug: req.params.slug }).populate('products');
+
+  // console.log(products);
+  res.status(200).render('category', products);
+});
 
 exports.getHome = catchAsync(async (req, res, next) => {
   //1) Get data from database
