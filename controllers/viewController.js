@@ -39,3 +39,14 @@ exports.getLogin = catchAsync(async (req, res, next) => {
 exports.getProfile = catchAsync(async (req, res, next) => {
   res.status(200).render('profile');
 });
+
+exports.getSearch = catchAsync(async (req, res, next) => {
+  const searchRes = await Product.find({ $text: { $search: req.query.text } })
+    .select({ score: { $meta: 'textScore' } })
+    .sort({ score: { $meta: 'textScore' } });
+
+  res.status(200).render('search', {
+    searchRes,
+    searchText: req.query.text
+  });
+});

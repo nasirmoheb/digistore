@@ -1,0 +1,17 @@
+extends base
+
+block content
+    section.search__result
+        h2.search__result--title
+            | Search result for:  #{searchText}
+        each item in searchRes
+            .search__result--block
+                .search__image
+                    img(src=`./images/${item.imageCover}.jpeg` alt=`${item.slug}`)
+                .search__description
+                    a.search__description--title(href=`/product/${item.slug}`)
+                        | #{item.name}
+                    p.search__description--summery= item.summery
+                    h3.search__description--company
+                        | Company: #{item.manufactureDetails.company}
+                    h3.search__description--date=` Relase Date :${item.manufactureDetails.releaseDate.toLocaleString('en-us',{month:'long',year:'numeric'})}`

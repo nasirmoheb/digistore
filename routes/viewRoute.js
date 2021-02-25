@@ -9,6 +9,8 @@ router.use(authController.isLoggedIn);
 
 router.use('/product/:slug', viewController.getProduct);
 
+router.use('/search', viewController.getSearch);
+
 router.use('/login', viewController.getLogin);
 
 router.use('/profile', viewController.getProfile);

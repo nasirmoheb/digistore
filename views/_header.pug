@@ -19,22 +19,27 @@ header#header.header
                             svg
                                 use(xlink:href='/images/sprite.svg#icon-cross')
                     ul.nav__list
-                        form.search.search_list(action='#')
-                            input.search__input(type='text' placeholder='Search products')
+                        form.search.search_list(action="/search" method="GET")
+                            input.search__input.top__search__input(type='text' name="text" placeholder='Search products')
                             button.search__button
                                 svg.search__icon
                                     use(xlink:href='/images/sprite.svg#icon-search')
                         li.nav__item
                             a.nav__link.scroll__link(href='/') Home
-                        li.nav__item
-                            a.nav__link.scroll__link(href='#catagory') Catagory
+                        li.nav__item.nav__item--catagory
+                            .dropdown
+                                a.dropbtn CATEGORY
+                                    .dropdown-content
+                                        a( href="#") Phone
+                                        a( href="#") Tablet
+                                        a( href="#") Computer
                         li.nav__item
                             a.nav__link.scroll__link(href='#contact') Contact
-                form.search(action='#')
-                    input.search__input(type='text' placeholder='Search products')
+                form.search.top__search__form(action="/search" method="GET")
+                    input.search__input.top__search__input(type='text' name="text" placeholder='Search products')
                     button.search__button
                         svg.search__icon
-                            use(xlink:href='/images/sprite.svg#icon-search')
+                            use(xlink:href='/images/sprite.svg#icon-search')     
                 .nav__icons
                     if user 
                         a.icon__item(href='/profile')

@@ -1,3 +1,4 @@
+/*eslint-disable*/
 // <!-----------------JS for Account page---------------->
 
 const LoginForm = document.getElementById('LoginForm');

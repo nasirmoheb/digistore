@@ -1,6 +1,17 @@
-import '@babel/polyfill';
-import axios from 'axios';
-import { showAlert } from '/alerts';
+/*eslint-disable*/
+
+const hideAlert = () => {
+  const el = document.querySelector('.alert');
+  if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+  hideAlert();
+  const markup = `<div class="alert alert--${type}">${msg}</div>`;
+  document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+  window.setTimeout(hideAlert, time * 1000);
+};
 
 const profileOpen = document.querySelector('.profile__menu--open');
 const profileClose = document.querySelector('.profile__menu--close');
@@ -22,40 +33,50 @@ profileClose.addEventListener('click', () => {
 
 const updateUserData = async (name, email) => {
   try {
-    const res = await axios({
+    const res = await fetch('http://127.0.0.1:3000/api/v1/user/updateMe', {
       method: 'PATCH',
-      url: 'http://127.0.0.1:3000/api/v1/user/updateMe',
-      data: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         name,
         email
-      }
+      })
     });
+    const content = await res.json();
 
-    if (res.data.status === 'success') {
+    if (content.status === 'success') {
       showAlert('success', 'Your Accout successfuly updated!');
+    } else {
+      showAlert('error', content.message);
     }
   } catch (err) {
-    showAlert('error', err.response.data.message);
+    showAlert('error', err);
   }
 };
 
 const updateUserPassword = async (currentPassword, password, passwordConfirm) => {
   try {
-    const res = await axios({
+    const res = await fetch('http://127.0.0.1:3000/api/v1/user/updatePassword', {
       method: 'PATCH',
-      url: 'http://127.0.0.1:3000/api/v1/user/updatePassword',
-      data: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         currentPassword,
         password,
         passwordConfirm
-      }
+      })
     });
+    const content = await res.json();
 
-    if (res.data.status === 'success') {
+    if (content.status === 'success') {
       showAlert('success', 'Your Password successfuly updated!');
+    } else {
+      showAlert('error', content.message);
     }
   } catch (err) {
-    showAlert('error', err.response.data.message);
+    showAlert('error', err);
   }
 };
 
@@ -82,16 +103,21 @@ document.querySelector('.save__password').addEventListener('click', async () => 
 
 document.getElementById('logout').addEventListener('click', async () => {
   try {
-    const res = await axios({
+    const res = await fetch('http://127.0.0.1:3000/api/v1/user/logout', {
       method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/user/logout'
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
 
-    if (res.data.status === 'success') {
+    const content = await res.json();
+    if (content.status === 'success') {
       showAlert('success', 'Logout successfully');
       location.assign('/');
+    } else {
+      showAlert('error', content.message);
     }
   } catch (err) {
-    showAlert('error', err.response.data.message);
+    showAlert('error', err);
   }
 });
