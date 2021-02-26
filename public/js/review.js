@@ -15,7 +15,7 @@ const showAlert = (type, msg, time = 7) => {
 
 const sendReview = async (review, rating, product_id) => {
   try {
-    const res = await fetch(`http://127.0.0.1:3000/api/v1/product/${product_id}/review`, {
+    const res = await fetch(`/api/v1/product/${product_id}/review`, {
       method: 'POST', // or 'PUT',
       headers: {
         'Content-Type': 'application/json'

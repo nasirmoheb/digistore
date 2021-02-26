@@ -6,7 +6,7 @@ dotenv.config({ path: './config.env' });
 
 //handling uncaughtException
 process.on('uncaughtException', err => {
-  console.log(err);
+  // console.log(err);
   console.log('(💥uncaughtException) Shutting down System .........*******');
   process.exit(1);
 });

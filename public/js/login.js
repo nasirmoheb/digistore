@@ -15,7 +15,7 @@ const showAlert = (type, msg, time = 7) => {
 
 const login = async (email, password) => {
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/user/login', {
+    const res = await fetch('/api/v1/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ const login = async (email, password) => {
 //registeration handler
 const register = async (name, email, password, passwordConfirm) => {
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/user/signup', {
+    const res = await fetch('/api/v1/user/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

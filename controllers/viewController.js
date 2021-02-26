@@ -43,7 +43,7 @@ exports.getHome = catchAsync(async (req, res, next) => {
 exports.getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findOne({ slug: req.params.slug }).populate('reviews');
 
-  console.log(product.reviews);
+  // console.log(product.reviews);
 
   const similarProducts = await Product.find({ $text: { $search: product.name } })
     .select({ score: { $meta: 'textScore' } })

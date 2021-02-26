@@ -33,7 +33,7 @@ profileClose.addEventListener('click', () => {
 
 const updateUserData = async (name, email) => {
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/user/updateMe', {
+    const res = await fetch('/api/v1/user/updateMe', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ const updateUserData = async (name, email) => {
 
 const updateUserPassword = async (currentPassword, password, passwordConfirm) => {
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/user/updatePassword', {
+    const res = await fetch('/api/v1/user/updatePassword', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -109,7 +109,7 @@ if (savePass) {
 
 document.getElementById('logout').addEventListener('click', async () => {
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/user/logout', {
+    const res = await fetch('/api/v1/user/logout', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -130,7 +130,7 @@ document.getElementById('logout').addEventListener('click', async () => {
 
 const addCategory = async name => {
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/category', {
+    const res = await fetch('/api/v1/category', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ if (saveCategory) {
 
 const addProduct = async data => {
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/product', {
+    const res = await fetch('/api/v1/product', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
