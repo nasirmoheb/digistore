@@ -1,0 +1,67 @@
+extends profile
+
+block profileDetails
+    .profile__details
+        .settings
+            h2.setting__head Manage Products
+            .settings__details
+                .form__group
+                    label(for='name') Name:
+                    input#productName(type='text', placeholder='Product Name', name, required)
+                .form__group
+                    label(for='name') SKU:
+                    input#productSKU(type='text', placeholder='Product SKU number', name, required)
+                .form__group
+                    label(for='name') Choose Product Cover Photo:
+                    input#productCoverPhoto(type='file', name='photos', accept='image/*')
+                .form__group
+                    label(for='name') Choose Product Photos:
+                    input#productPhotos(type='file', name='photos', accept='image/*', multiple)
+                .form__group
+                    label(for='name') Price:
+                    input#productPrice(type='number', placeholder='Product Price', name, required)
+                .form__group
+                    label(for='name') Quantity:
+                    input#productQuantity(type='number', placeholder='Product Quantity', required)
+                .form__group
+                    label(for='name') Catagory:
+                    select#productCategory(name='Catagory')
+                        each item in categoryName
+                            option(value=`${item.id}`) #{item.name} 
+                .form__group
+                    label(for='name') Product Summery:
+                    textarea.review__input#productSummery(placeholder='Product Summery')
+                .form__group
+                    label(for='name') Product Description:
+                    textarea.review__input#productDescription(placeholder='Product Description')
+                .form__group
+                    fieldset
+                        legend Manufacture Details:
+                        | Model Number:
+                        br
+                        input#productModel(type='text', placeholder='Product Model Number')
+                        br
+                        | Release Date:
+                        br
+                        input#productReleaseDate(type='date', name, placeholder='Product Release Date')
+                        br 
+                        | company:
+                        br
+                        input#productCompanyName(type='text', name, placeholder='Product Company Name')
+                        br
+                .form__group
+                    fieldset
+                        legend Shipping Details:
+                        | weight :
+                        br
+                        input#ProductWeight(type='number', placeholder='Product weight')
+                        br
+                        | width :
+                        br
+                        input#productWidth(type='number', placeholder='Product width')
+                        br
+                        | height :
+                        br
+                        input#productHeight(type='number', placeholder='Product height')
+                        br
+                button.save__change--btn#addProduct Add Product

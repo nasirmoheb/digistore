@@ -12,6 +12,10 @@ router.use('/product/:slug', viewController.getProduct);
 
 router.use('/category/:slug', viewController.getCategory);
 
+router.use('/m_category', viewController.getMCategory);
+
+router.use('/m_product', viewController.getMProduct);
+
 router.use('/search', viewController.getSearch);
 
 router.use('/login', viewController.getLogin);

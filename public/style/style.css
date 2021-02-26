@@ -1556,6 +1556,12 @@ Profile
   margin: 2rem;
 }
 
+.form__group select {
+  padding: 0.5rem;
+  border: 1px solid var(--black2);
+  font-size: 2rem;
+}
+
 .form__group input {
   padding: 1rem;
   border: 3px solid var(--black2);
@@ -1781,4 +1787,13 @@ Show alert
 }
 .alert--error {
   background-color: var(--orange);
+}
+
+/* Category Products */
+
+.category__products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10rem 5rem 5rem 8rem;
 }

@@ -1,0 +1,12 @@
+extends profile
+
+block profileDetails
+    .profile__details
+        .settings
+            h2.setting__head Manage your catagories
+            .settings__details
+                .form__group.form__group--name#manageCategory
+                    label(for='name') Catagory Name:
+                    input#categoryName(type='text', placeholder='Please add category name')
+                button.save__change--btn#categorySaveBtn Add Catagory
+    

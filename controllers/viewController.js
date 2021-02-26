@@ -16,6 +16,16 @@ exports.getCategory = catchAsync(async (req, res, next) => {
   res.status(200).render('category', products);
 });
 
+exports.getMCategory = catchAsync(async (req, res, next) => {
+  res.status(200).render('manageCategory');
+});
+
+exports.getMProduct = catchAsync(async (req, res, next) => {
+  const categoryName = await Category.find();
+
+  res.status(200).render('manageProduct', { categoryName });
+});
+
 exports.getHome = catchAsync(async (req, res, next) => {
   //1) Get data from database
 

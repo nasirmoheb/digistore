@@ -80,26 +80,32 @@ const updateUserPassword = async (currentPassword, password, passwordConfirm) =>
   }
 };
 
-document.querySelector('.save__data').addEventListener('click', async () => {
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  document.querySelector('.save__data').textContent = 'updating...';
-  await updateUserData(name, email);
-  document.querySelector('.save__data').textContent = 'Save Changes';
-});
+const saveData = document.querySelector('.save__data');
+if (saveData) {
+  saveData.addEventListener('click', async () => {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    document.querySelector('.save__data').textContent = 'updating...';
+    await updateUserData(name, email);
+    document.querySelector('.save__data').textContent = 'Save Changes';
+  });
+}
 
-document.querySelector('.save__password').addEventListener('click', async () => {
-  const currentPassword = document.getElementById('c_pass').value;
-  const password = document.getElementById('n_pass').value;
-  const passwordConfirm = document.getElementById('co_pass').value;
+const savePass = document.querySelector('.save__password');
+if (savePass) {
+  savePass.addEventListener('click', async () => {
+    const currentPassword = document.getElementById('c_pass').value;
+    const password = document.getElementById('n_pass').value;
+    const passwordConfirm = document.getElementById('co_pass').value;
 
-  document.querySelector('.save__password').textContent = 'updating...';
-  await updateUserPassword(currentPassword, password, passwordConfirm);
-  document.querySelector('.save__password').textContent = 'Save Changes';
-  document.getElementById('c_pass').value = '***********';
-  document.getElementById('n_pass').value = '***********';
-  document.getElementById('co_pass').value = '***********';
-});
+    document.querySelector('.save__password').textContent = 'updating...';
+    await updateUserPassword(currentPassword, password, passwordConfirm);
+    document.querySelector('.save__password').textContent = 'Save Changes';
+    document.getElementById('c_pass').value = '***********';
+    document.getElementById('n_pass').value = '***********';
+    document.getElementById('co_pass').value = '***********';
+  });
+}
 
 document.getElementById('logout').addEventListener('click', async () => {
   try {
@@ -121,3 +127,102 @@ document.getElementById('logout').addEventListener('click', async () => {
     showAlert('error', err);
   }
 });
+
+const addCategory = async name => {
+  try {
+    const res = await fetch('http://127.0.0.1:3000/api/v1/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json'
+      },
+      body: JSON.stringify({ name })
+    });
+
+    const content = await res.json();
+
+    if (content.status === 'success') {
+      showAlert('success', 'Your Category successfully created!😍');
+    } else {
+      showAlert('error', content.message);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const saveCategory = document.querySelector('#categorySaveBtn');
+
+if (saveCategory) {
+  saveCategory.addEventListener('click', () => {
+    const categoryName = document.querySelector('#categoryName').value;
+    addCategory(categoryName);
+  });
+}
+
+const addProduct = async data => {
+  try {
+    const res = await fetch('http://127.0.0.1:3000/api/v1/product', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    const content = await res.json();
+
+    if (content.status === 'success') {
+      showAlert('success', 'Product successfuly created!🌐');
+    } else {
+      showAlert('error', content.message);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const saveProduct = document.querySelector('#addProduct');
+if (saveProduct) {
+  saveProduct.addEventListener('click', () => {
+    const pName = document.querySelector('#productName').value;
+    const pSKU = document.querySelector('#productSKU').value;
+    const pCoverPhoto = document.querySelector('#productCoverPhoto').value;
+    const pPhotos = document.querySelector('#productPhotos').value;
+    const pPrice = document.querySelector('#productPrice').value;
+    const pQuantity = document.querySelector('#productQuantity').value;
+    const pCategory = document.querySelector('#productCategory').value;
+    const pSummery = document.querySelector('#productSummery').value;
+    const pDescription = document.querySelector('#productDescription').value;
+    const pModel = document.querySelector('#productModel').value;
+    const pReleaseDate = document.querySelector('#productReleaseDate').value;
+    const pCompany = document.querySelector('#productCompanyName').value;
+    const pWeight = document.querySelector('#ProductWeight').value;
+    const pWidth = document.querySelector('#productWidth').value;
+    const pHeight = document.querySelector('#productHeight').value;
+
+    const data = {
+      sku: pSKU,
+      name: pName,
+      category: pCategory,
+      imageCover: pCoverPhoto,
+      images: pPhotos,
+      summery: pSummery,
+      description: pDescription,
+      manufactureDetails: {
+        modelNumber: pModel,
+        releaseDate: pReleaseDate,
+        company: pCompany
+      },
+      shippingDetails: {
+        weight: pWeight,
+        width: pWidth,
+        height: pHeight
+      },
+      price: pPrice,
+      quantity: pQuantity
+    };
+
+    addProduct(data);
+  });
+}
