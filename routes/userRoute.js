@@ -5,7 +5,7 @@ const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
 
 const router = express.Router();
-const upload = multer({ dest: '/public/images/users' });
+// const upload = multer({ dest: '/public/images/users' });
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
@@ -18,7 +18,7 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 router.use(authController.protect);
 
 router.patch('/updatePassword', authController.updatePassword);
-router.patch('/updateMe', upload.single('photo'), userController.updateMe);
+router.patch('/updateMe', userController.updateMe);
 router.get('/me', userController.getMe, userController.getUser);
 
 //These routes restrict to admin

@@ -4,7 +4,7 @@
   "description": "DigiStore is an online shopping website",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "watch:js": "parcel watch ./public/js/search.js --out-dir ./public/js --out-file searchbundle.js",
     "build:js": "parcel build ./public/js/profile.js --out-dir ./public/js --out-file profilebundle.js"
   },
