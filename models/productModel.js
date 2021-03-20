@@ -45,12 +45,6 @@ const productSchema = new mongoose.Schema(
       releaseDate: Date,
       company: String
     },
-    shippingDetails: {
-      weight: Number,
-      width: Number,
-      height: Number,
-      depth: Number
-    },
     price: {
       type: Number,
       required: [true, 'A product must have price']
