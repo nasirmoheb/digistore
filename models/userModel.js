@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
       maxlength: [20, "A user name can't be more than 20 characters!"],
       minlength: [4, 'A user name must be longer than 4 characters!']
     },
-    photo: { type: String, default: 'default' },
+    photo: { type: String, default: 'default.jpeg' },
     email: {
       type: String,
       trim: true,
