@@ -11,6 +11,7 @@ const hpp = require('hpp');
 const productRoute = require('./routes/productRoute');
 const userRoute = require('./routes/userRoute');
 const cartRoute = require('./routes/cartRoute');
+const orderRoute = require('./routes/orderRoute');
 const reviewRoute = require('./routes/reviewRoute');
 const categoryRoute = require('./routes/categoryRoute');
 const viewRoute = require('./routes/viewRoute');
@@ -79,6 +80,7 @@ app.use('/api/v1/user', userRoute);
 app.use('/api/v1/review', reviewRoute);
 app.use('/api/v1/category', categoryRoute);
 app.use('/api/v1/cart', cartRoute);
+app.use('/api/v1/order', orderRoute);
 app.use('/', viewRoute);
 
 //handle request not fount error

@@ -24,7 +24,7 @@ block content
                                 h1.header__title PHONES MADE FOR YOU!
                                 p.header__paragraph
                                     | Trending mobile in 2021
-                                a.header__btn(href='') SHOP NOW
+                                a.header__btn(href='/category/phones') SHOP NOW
                             .header__banner
                                 img.header__image(src='/images/banner_01.png' alt='banner_1')
         .glide__arrows(data-glide-el='controls')
@@ -156,7 +156,7 @@ block content
         new Glide('.latest__product--glide', {
         type: 'carousel',
         startAt: 0,
-        //-   autoplay: 5000,
+          autoplay: 6000,
         hoverpause: true,
         perView: 4,
         animationDuration: 1000,
@@ -177,7 +177,7 @@ block content
         new Glide('.trending__product--glide', {
         type: 'carousel',
         startAt: 0,
-        autoplay: 5000,
+        autoplay: 6000,
         hoverpause: true,
         perView: 4,
         animationDuration: 1000,

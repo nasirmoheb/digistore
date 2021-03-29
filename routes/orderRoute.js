@@ -1,8 +1,11 @@
 const express = require('express');
 const orderController = require('./../controllers/orderController');
+const authController = require('../controllers/authController');
 
 const router = new express.Router();
 
+//all routes after this will use this middleware authController.protect
+router.use(authController.protect);
 router
   .route('/')
   .get(orderController.getOrders)

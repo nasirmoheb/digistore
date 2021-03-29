@@ -59,36 +59,36 @@ exports.signup = catchAsync(async (req, res, next) => {
     user.name
   }!\n We are glad that you are useing our website. Please submit a POST request m to:\n ${activeUrl}\n to active your account \n If you do not register in our website, please ignore this email. `;
 
-  // try {
-  //   //send the token to the user email
-  //   await sendEmail({
-  //     email: user.email,
-  //     subject: 'Your Account Activeation Link (Valid for 5 days)',
-  //     message: message
-  //   });
+  try {
+    //send the token to the user email
+    await sendEmail({
+      email: user.email,
+      subject: 'Your Account Activeation Link (Valid for 5 days)',
+      message: message
+    });
 
-  //   //Send response to the user
-  //   res.status(200).json({
-  //     status: 'success',
-  //     message: `Your activation link has been sent to ${
-  //       user.email
-  //     }.\n Please go to your email and active your account.`,
-  //     data: user
-  //   });
-  // } catch (err) {
-  //   //if there is error delete the user and send error message
-  //   await User.deleteOne({ email: req.body.email });
-  //   res.status(500).json({
-  //     status: 'Error',
-  //     message: 'There was error in sending email'
-  //   });
-  // }
+    //Send response to the user
+    res.status(200).json({
+      status: 'success',
+      message: `Your activation link has been sent to ${
+        user.email
+      }.\n Please go to your email and active your account.`,
+      data: user
+    });
+  } catch (err) {
+    //if there is error delete the user and send error message
+    await User.deleteOne({ email: req.body.email });
+    res.status(500).json({
+      status: 'Error',
+      message: 'There was error in sending email'
+    });
+  }
 
-  res.status(200).json({
-    status: 'success',
-    message: message,
-    data: user
-  });
+  // res.status(200).json({
+  //   status: 'success',
+  //   message: message,
+  //   data: user
+  // });
 });
 
 exports.activeUser = catchAsync(async (req, res, next) => {

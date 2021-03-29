@@ -18,7 +18,7 @@ router
   .get(productController.getProduct)
   .patch(
     authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
+    authController.restrictTo('admin'),
     productController.uploadTourImages,
     productController.resizeUserPhoto,
     productController.updateProduct
