@@ -197,9 +197,6 @@ if (saveProduct) {
     const pModel = document.querySelector('#productModel').value;
     const pReleaseDate = document.querySelector('#productReleaseDate').value;
     const pCompany = document.querySelector('#productCompanyName').value;
-    const pWeight = document.querySelector('#ProductWeight').value;
-    const pWidth = document.querySelector('#productWidth').value;
-    const pHeight = document.querySelector('#productHeight').value;
 
     const data = {
       sku: pSKU,
@@ -213,11 +210,6 @@ if (saveProduct) {
         modelNumber: pModel,
         releaseDate: pReleaseDate,
         company: pCompany
-      },
-      shippingDetails: {
-        weight: pWeight,
-        width: pWidth,
-        height: pHeight
       },
       price: pPrice,
       quantity: pQuantity

@@ -94,12 +94,11 @@ block content
                             use(xlink:href='/images/sprite.svg#icon-arrow-right2')
 
     script(src='/js/review.js')
-    script(src='/js/glide/glide.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/glide.min.js')
     script.
         new Glide('.product__details--glide', {
         type: 'carousel',
         startAt: 0,
-        autoplay: 5000,
         hoverpause: true,
         perView: 1,
         animationDuration: 1000,

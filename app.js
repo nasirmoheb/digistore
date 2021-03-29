@@ -10,6 +10,7 @@ const hpp = require('hpp');
 
 const productRoute = require('./routes/productRoute');
 const userRoute = require('./routes/userRoute');
+const cartRoute = require('./routes/cartRoute');
 const reviewRoute = require('./routes/reviewRoute');
 const categoryRoute = require('./routes/categoryRoute');
 const viewRoute = require('./routes/viewRoute');
@@ -32,7 +33,7 @@ app.use(express.json({ limit: '50kb' }));
 //parse the cookie
 app.use(cookieParser());
 
-//*** */ SECURITY MIDDLEWARES
+//*** */ SECURITY MIDDLEWARE
 //
 
 //Preventing from DOS and BRUTE FORCE ATTACK
@@ -46,16 +47,16 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-//seting http security headers
+//setting http security headers
 app.use(helmet());
 
-//Preventing NO-SQL injenction
+//Preventing NO-SQL injection
 app.use(mongoSanitize());
 
-//Preventin XSS Attack
+//Preventing XSS Attack
 app.use(xss());
 
-//Preventing parameter polution
+//Preventing parameter pollution
 app.use(
   hpp({
     //whitelist some parameters that are safe
@@ -63,9 +64,9 @@ app.use(
   })
 );
 
-//* ***/ SECURITY MIDDLEWARES
+//* ***/ SECURITY MIDDLEWARE
 
-//development Loger
+//development Logger
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -77,6 +78,7 @@ app.use('/api/v1/product', productRoute);
 app.use('/api/v1/user', userRoute);
 app.use('/api/v1/review', reviewRoute);
 app.use('/api/v1/category', categoryRoute);
+app.use('/api/v1/cart', cartRoute);
 app.use('/', viewRoute);
 
 //handle request not fount error

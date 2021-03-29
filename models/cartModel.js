@@ -1,33 +1,36 @@
 const mongoose = require('mongoose');
-const Product = require('./productModel');
+const validator = require('validator');
+// const Product = require('./productModel');
 
-const cartSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-      required: [true, 'Cart must belong to a user']
-    },
-    status: {
-      type: Boolean,
-      default: false
-    },
-    quantity: Number,
-    totalPrice: Number,
-    products: Array
+const ItemSchema = new mongoose.Schema({
+  product_id: {
+    type: String,
+    required: true
   },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true }
+  qty: {
+    type: Number,
+    required: true,
+    min: [1, 'Quantity can not be less then 1.']
   }
-);
-
-//Embedding Products in cart
-cartSchema.pre('save', async function(next) {
-  const products = this.products.map(async id => await Product.findById(id));
-  this.products = await Promise.all(products);
-  next();
 });
+const CartSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    validate: validator.isEmail
+  },
+  items: [ItemSchema],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+//Embedding Products in cart
+// cartSchema.pre('save', async function(next) {
+//   const products = this.products.map(async id => await Product.findById(id));
+//   this.products = await Promise.all(products);
+//   next();
+// });
 
-const Cart = mongoose.model('Cart', cartSchema);
+const Cart = mongoose.model('Cart', CartSchema);
 module.exports = Cart;
