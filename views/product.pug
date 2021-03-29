@@ -22,7 +22,7 @@ block content
                     ul.glide__slides
                         each img in product.images
                             li.glide__slide
-                                img.product__details--image(src=`/images/${img}.jpeg` alt=`${product.slug}`)
+                                img.product__details--image(src=`/images/${img}` alt=`${product.slug}`)
                 .glide__arrows(data-glide-el='controls')
                     button.glide__arrow.glide__arrow--left(data-glide-dir='<')
                         svg
@@ -79,7 +79,7 @@ block content
                         each item in similarProducts
                             li.glide__slide
                                 .cart
-                                    img.cart__image(src=`/images/${item.imageCover}.jpeg` alt=`${item.slug}`)
+                                    img.cart__image(src=`/images/${item.imageCover}` alt=`${item.slug}`)
                                     a.cart__title(href=`/product/${item.slug}`)= item.name
                                     .rating
                                         +productStar(item)

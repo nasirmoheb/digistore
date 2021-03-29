@@ -10,7 +10,7 @@ block content
                 use(xlink:href='/images/sprite.svg#icon-arrow-left2')
         .profile__menu
             .user__picture
-                img(src=`/images/${user.photo}.jpg` alt='')
+                img(src=`/images/users/${user.photo}` alt='')
             .user__name= user.name
             .user__nav
                 a.user__order#logout(href='#')
@@ -43,7 +43,7 @@ block content
                             input#email(type='email' value=`${user.email}` name='')
                         .form__group--photo
                             img(src=`/images/${user.photo}.jpg` alt='')
-                            input#photo(type='file' name='photo' accept='image/*' placeholder='C')
+                            input#photo(type='file' accept='image/*' name='photo')
                             label(for='photo') Choose new photo
                         button.save__change--btn.save__data Save Changes
                     .settings__password

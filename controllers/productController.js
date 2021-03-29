@@ -1,7 +1,61 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const Product = require('./../models/productModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const APIFeature = require('./../utils/apiFeature');
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image ! Please upload only images.', 400), false);
+  }
+};
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+
+//When mix of one and array
+exports.uploadTourImages = upload.fields([
+  { name: 'imageCover', maxCount: 1 },
+  {
+    name: 'images'
+  }
+]);
+
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+  if (!req.files.imageCover || !req.files.images) return next();
+
+  // req.files.imageCover = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+  //1) ImageCover
+  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(2000, 1333)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/images/${req.body.imageCover}`);
+  //2) Images
+  req.body.images = [];
+  await Promise.all(
+    req.files.images.map(async (el, i) => {
+      const fileName = `product-${req.params.id}-${Date.now()}-image-${i}.jpeg`;
+      await sharp(el.buffer)
+        .resize(500, 700)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/images/${fileName}`);
+
+      req.body.images.push(fileName);
+    })
+  );
+
+  next();
+});
 
 exports.getAllProduct = catchAsync(async (req, res, next) => {
   const features = new APIFeature(Product.find(), req.query)

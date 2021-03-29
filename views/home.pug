@@ -44,7 +44,7 @@ block content
                         each product in latestProducts
                             li.glide__slide
                                 .cart
-                                    img.cart__image(src=`/images/${product.imageCover}.jpeg` alt=`${product.name}`)
+                                    img.cart__image(src=`/images/${product.imageCover}` alt=`${product.name}`)
                                     a.cart__title(href=`/product/${product.slug}`)=product.name
                                     .rating
                                         +star(product)
@@ -67,7 +67,7 @@ block content
                         each product in trendingProducts
                             li.glide__slide
                                 .cart
-                                    img.cart__image(src=`/images/${product.imageCover}.jpeg` alt=`${product.name}`)
+                                    img.cart__image(src=`/images/${product.imageCover}` alt=`${product.name}`)
                                     a.cart__title(href=`/product/${product.slug}`)=product.name
                                     .rating
                                         +star(product)

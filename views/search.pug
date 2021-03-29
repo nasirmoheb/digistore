@@ -7,7 +7,7 @@ block content
         each item in searchRes
             .search__result--block
                 .search__image
-                    img(src=`./images/${item.imageCover}.jpeg` alt=`${item.slug}`)
+                    img(src=`./images/${item.imageCover}` alt=`${item.slug}`)
                 .search__description
                     a.search__description--title(href=`/product/${item.slug}`)
                         | #{item.name}

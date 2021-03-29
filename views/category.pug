@@ -10,7 +10,7 @@ block content
     section.category__products
         each product in products
             .cart
-                img.cart__image(src=`/images/${product.imageCover}.jpeg` alt=`${product.name}`)
+                img.cart__image(src=`/images/${product.imageCover}` alt=`${product.name}`)
                 a.cart__title(href=`/product/${product.slug}`)=product.name
                 .rating
                     +star(product)

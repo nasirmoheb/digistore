@@ -16,7 +16,13 @@ router
 router
   .route('/:id')
   .get(productController.getProduct)
-  .patch(productController.updateProduct)
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin', 'lead-guide'),
+    productController.uploadTourImages,
+    productController.resizeUserPhoto,
+    productController.updateProduct
+  )
   .delete(productController.deleteProduct);
 
 module.exports = router;
